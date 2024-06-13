@@ -12,6 +12,7 @@
         // 練習問題5-2-3の機能
         $().ready(function () {
             doSelect();
+            setInterval(doSelect, 2000);    // 練習問題5-2-4の機能
         });
 
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
