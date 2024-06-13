@@ -19,13 +19,11 @@
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
-            var html = '';
-            html = html + '<ul>';
+            var html = '<tr><th>id</th><th>名前</th><th>tweet</th><th>時刻</th></tr>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.id + ',' + object.name + ',' + object.tweet + ',' + object.time + '</li>';
+                html = html + '<tr><td>' + object.id + '</td><td>' + object.name + '</td><td>' + object.tweet + '</td><td>' + object.time + '</td></tr>';
             }
-            html = html + '</ul>';
             document.getElementById('result').innerHTML = html;
         }
     </script>
@@ -34,9 +32,11 @@
 
 <body>
     <h1>Tweets</h1>
-    <button onclick="button1Pressed()">X</button>
+    <button onclick="button1Pressed()">ツイートを表示</button>
     <hr>
-    <p id="result">xxxx</p>
+        <table border="1">
+            <tbody id="result"></tbody>
+        </table>
 </body>
 
 </html>
