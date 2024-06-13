@@ -9,6 +9,11 @@
     <script type="text/javascript" src="../lib/osql.js"></script>
 
     <script>
+        // 練習問題5-2-3の機能
+        $().ready(function () {
+            doSelect();
+        });
+
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
         function button1Pressed() {
