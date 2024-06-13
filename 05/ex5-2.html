@@ -12,7 +12,43 @@
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
         function button1Pressed() {
+            doSelect();
+        }
+
+        function button2Pressed() {
+            findByTweet();
+        }
+
+        function button3Pressed() {
             doInsert();
+        }
+
+        
+
+        async function doSelect() {
+            var sql = 'select * from Tweets order by time desc limit 20';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '<tr><th>id</th><th>名前</th><th>tweet</th><th>時刻</th></tr>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr><td>' + object.id + '</td><td>' + object.name + '</td><td>' + object.tweet + '</td><td>' + object.time + '</td></tr>'; // 練習問題5-1-1の機能（最初からやってあった）
+            }
+            document.getElementById('result').innerHTML = html;
+        }
+
+        // 練習問題5-1-2の機能
+        async function findByTweet() {
+            var targetText = document.getElementById('textfield2').value;
+            var sql = 'select * from Tweets where tweet like "%' + targetText + '%" order by time desc limit 20';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '<tr><th>id</th><th>名前</th><th>tweet</th><th>時刻</th></tr>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr><td>' + object.id + '</td><td>' + object.name + '</td><td>' + object.tweet + '</td><td>' + object.time + '</td></tr>';
+            }
+            document.getElementById('result').innerHTML = html;
         }
 
         async function doInsert() {
@@ -23,7 +59,7 @@
             var objects = await osql.connect(sql);
             console.log(objects);
 
-            document.getElementById('result').innerHTML = "tweetしました";
+            document.getElementById('notification').innerHTML = "tweetしました";
             document.getElementById('tf2').value = ''; // 練習問題5-2-1
 
         }
@@ -37,9 +73,19 @@
     名前:<input id="tf1" value="名無し" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
-    <button onclick="button1Pressed()">tweet</button>
+    <button onclick="button3Pressed()">tweet</button>
     <br>
-    <p id="result"></p>
+    <p id="notification"></p>
+
+    <hr>
+    <button onclick="button1Pressed()">ツイートを表示</button>
+    |
+    <button onclick="button2Pressed()">検索</button><input id="textfield2" placeholder="検索キーワードを入力" />
+    <hr>
+    <!-- 練習問題5-1-3はex5-1-1を提出した時に一緒にやっちゃいました -->
+    <table border="1">
+        <tbody id="result"></tbody>
+    </table>
 </body>
 
 </html>
